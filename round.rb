@@ -24,17 +24,12 @@ class Round
     end
   end
 
-
   def finished?
     @finished
   end
 
   def dealer_cards
-    if finished?
-      @dealer_cards
-    else
-      [@dealer_cards[0], '***']
-    end
+    finished? ? @dealer_cards : [@dealer_cards[0], '***']
   end
 
   private
@@ -82,7 +77,6 @@ class Round
     @dealer_score = score(@dealer_cards)
   end
 
-
   def check_result_after_player_turn
     if @player_score > 21
       @result = :dealer_wins
@@ -109,6 +103,5 @@ class Round
     end
     @finished = true
   end
-
 
 end

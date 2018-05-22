@@ -7,7 +7,6 @@ module Interface
     gets.chomp
   end
 
-
   def show_info(round)
     puts "Player: #{round.player_cards}, #{round.player_score}"
     puts "Dealer: #{round.dealer_cards}, #{round.dealer_score}"
