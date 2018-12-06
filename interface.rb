@@ -2,7 +2,6 @@ module Interface
   module_function
 
   def ask_player_name
-
     puts 'Введите имя пользователя:'
     gets.chomp
   end
@@ -17,6 +16,7 @@ module Interface
     puts 'Введите 0 или любой текст чтобы передать ход дилеру'
     des = gets.chomp.to_i
     return :take_card if des == 1
+
     :dealer_turn
   end
 
@@ -26,10 +26,10 @@ module Interface
 
     if round.finished?
       result = case round.result
-                 when :player_wins then 'Вы выиграли'
-                 when :draw        then 'Ничья'
-                 when :dealer_wins then 'Дилер выиграл'
-                 else 'Ошибка'
+               when :player_wins then 'Вы выиграли'
+               when :draw        then 'Ничья'
+               when :dealer_wins then 'Дилер выиграл'
+               else 'Ошибка'
                end
       puts "Result: #{result}"
     end
@@ -45,7 +45,7 @@ module Interface
     gets.chomp == '1'
   end
 
-  def say_goodbye(balance: , name:)
+  def say_goodbye(balance:, name:)
     puts "Рады были с вами играть, #{name}, ваш баланс #{balance}"
   end
 
@@ -56,5 +56,4 @@ module Interface
   def welcome_message
     puts 'Добрый день, хорошей вам игры в BlackJack'
   end
-
 end

@@ -12,17 +12,16 @@ class Game
     @player_name = Interface.ask_player_name
   end
 
-
   def controller
     Interface.welcome_message
 
-    while player_balance > ROUND_RATE do
+    while player_balance > ROUND_RATE
       Interface.new_round
 
       bet_player_balance
       @current_round = Round.new
 
-      until current_round.finished? do
+      until current_round.finished?
         Interface.show_info(current_round)
         decision = Interface.ask_player_decision
         current_round.player_turn(decision)
@@ -43,6 +42,7 @@ class Game
 
   def update_player_balance
     return unless current_round.finished?
+
     @player_balance += 2 * ROUND_RATE if current_round.result == :player_wins
     @player_balance +=     ROUND_RATE if current_round.result == :draw
   end
@@ -50,5 +50,4 @@ class Game
   def bet_player_balance
     @player_balance -= ROUND_RATE
   end
-
 end

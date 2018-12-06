@@ -1,8 +1,7 @@
 require_relative 'deck'
 
 class Round
-
-  attr_reader   :player_score, :dealer_score, :player_cards, :result
+  attr_reader :player_score, :dealer_score, :player_cards, :result
 
   def initialize
     @cards = Deck.generate
@@ -16,11 +15,12 @@ class Round
 
   def player_turn(decision)
     return if finished?
+
     case decision
-      when :take_card
-        player_take_card
-      when :dealer_turn
-        dealer_turn
+    when :take_card
+      player_take_card
+    when :dealer_turn
+      dealer_turn
     end
   end
 
@@ -36,9 +36,9 @@ class Round
 
   def score(cards)
     amount = cards.map(&:to_i).sum
-    amount += cards.select{|card| ['J', 'Q', 'K'].include? card[0] }.count * 10
-    amount += cards.select{|card| ['A'].include? card[0] }.count * 11
-    count_aces = cards.select{|card| card[0] == 'A'}.count
+    amount += cards.select { |card| %w[J Q K].include? card[0] }.count * 10
+    amount += cards.select { |card| ['A'].include? card[0] }.count * 11
+    count_aces = cards.select { |card| card[0] == 'A' }.count
     count_aces.times do
       amount -= 10 if amount > 21
     end
@@ -64,6 +64,7 @@ class Round
     loop do
       calc_dealer_score
       break if dealer_score >= 17
+
       @dealer_cards << @cards.delete(@cards.sample)
     end
     check_result_after_dealer_turn
@@ -85,7 +86,6 @@ class Round
   end
 
   def check_result_after_dealer_turn
-
     if @dealer_score > 21
       @result = :player_wins
       @finished = true
@@ -93,15 +93,13 @@ class Round
     end
 
     delta = @player_score - @dealer_score
-    case
-      when delta > 0
-        @result = :player_wins
-      when delta == 0
-        @result = :draw
-      when delta < 0
-        @result = :dealer_wins
+    if delta > 0
+      @result = :player_wins
+    elsif delta == 0
+      @result = :draw
+    elsif delta < 0
+      @result = :dealer_wins
     end
     @finished = true
   end
-
 end
